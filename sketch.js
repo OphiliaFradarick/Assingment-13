@@ -3,7 +3,7 @@ var ground, invisibleGround, groundImage;
 
 var cloud, cloudsGroup, cloudImage;
 
-
+var score = 0;
 
 var newImage;
 
@@ -14,18 +14,14 @@ function preload(){
   groundImage = loadImage("ground2.png");
   
   cloudImage = loadImage("cloud.png");
+
+  obstacle1 = loadImage("obstacle1.png");
+  obstacle2 = loadImage("obstacle2.png");
+  obstacle3 = loadImage("obstacle3.png");
+  obstacle4 = loadImage("obstacle4.png");
+  obstacle5 = loadImage("obstacle5.png");
+  obstacle6 = loadImage("obstacle6.png");
  
-  obstacle1Image = loadImage("obstacle1.png");
-
-  obstacle2Image = loadImage("obstacle2.png");
-
-  obstacle3Image = loadImage("obstacle3.png");
-
-  obstacle4Image = loadImage("obstacle4.png");
-
-  obstacle5Image = loadImage("obstacle5.png");
-
-  obstacle6Image = loadImage("obstacle6.png");
 }
 
 function setup() {
@@ -51,6 +47,9 @@ function setup() {
 function draw() {
   background(180);
   
+  score = score + Math.round(frameCount/60);
+  textSize(20)
+  text("Score: " + score, 500, 50);
   
   if(keyDown("space")&& trex.y >= 100) {
     trex.velocityY = -10;
@@ -64,14 +63,11 @@ function draw() {
   
   trex.collide(invisibleGround);
   
-  //spawn the clouds
+  //spawn the clouds and obstacle
   spawnClouds();
+  spawnObstacle();
   
-SpawnObstacles();
-
   drawSprites();
-
-  
 }
 
 function spawnClouds() {
@@ -85,7 +81,7 @@ function spawnClouds() {
     
     
     //assigning lifetime to the variable
-    cloud.lifetime = 200;
+    cloud.lifetime = 200
     
     //adjust the depth
     cloud.depth = trex.depth
@@ -94,28 +90,31 @@ function spawnClouds() {
 }
 
 
-function SpawnObstacles(){
-  if (frameCount % 60 === 0){
-  Obstacles = createSprite(600,165,10,40);
-  Obstacles.velocityX = -3;
-  Obstacles.lifetime = 200;
-  var apple = Math.round(random(1,6))
-  Obstacles.scale = 0.5;
-  switch(apple){
-    case 1: Obstacles.addImage(Obstacle1Image);
-    break;
-    case 2: Obstacles.addImage(Obstacle2Image);
-    break;
-    case 3: Obstacles.addImage(Obstacle3Image);
-    break;
-    case 4: Obstacles.addImage(Obstacle4Image);
-    break;
-    case 5: Obstacles.addImage(Obstacle5Image);
-    break;
-    case 6: Obstacles.addImage(Obstacle6Image);
-    break;
-    default: break;
-  }
-  }
+function spawnObstacle() {
+  //write code here to spawn the clouds
+  if (frameCount % 60 === 0) {
+    obstacle = createSprite(600,165,10,40);
+    obstacle.scale = 0.4;
+    obstacle.velocityX = -3;
+    //assigning lifetime to the variable
+    obstacle.lifetime = 200
+    
+    var rand = Math.round(random(1,6));
+    switch (rand) {
+      case 1: obstacle.addImage(obstacle1);
+      break;
+      case 2: obstacle.addImage(obstacle2);
+      break;
+      case 3: obstacle.addImage(obstacle3);
+      break;
+      case 4: obstacle.addImage(obstacle4);
+      break;
+      case 5: obstacle.addImage(obstacle5);
+      break;
+      case 6: obstacle.addImage(obstacle6);
+      break;
+      default:break;
+    }
+    
+    }
 }
-
